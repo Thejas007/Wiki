@@ -30,4 +30,5 @@ Force push to origin
 # SYSTIMESTAMP oracle
 
 select systimestamp at time zone 'UTC',sys_extract_utc(systimestamp at time zone 'UTC') ,sys_extract_utc(SYSTIMESTAMP), cast (sys_extract_utc(SYSTIMESTAMP) as date)from dual;
+
 sys_extract_utc(SYSTIMESTAMP) returns TIMESTAMP(6)
