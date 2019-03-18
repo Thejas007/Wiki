@@ -32,3 +32,9 @@ Force push to origin
 select systimestamp at time zone 'UTC',sys_extract_utc(systimestamp at time zone 'UTC') ,sys_extract_utc(SYSTIMESTAMP), cast (sys_extract_utc(SYSTIMESTAMP) as date)from dual;
 
 sys_extract_utc(SYSTIMESTAMP) returns TIMESTAMP(6)
+
+# Convert to UTC
+ select sysdate,      
+      (sysdate+ NUMTODSINTERVAL(-1*EXTRACT(timezone_hour FROM SYSTIMESTAMP),'hour') +  NUMTODSINTERVAL((-1*SIGN(EXTRACT(timezone_hour FROM SYSTIMESTAMP))*EXTRACT(timezone_minute FROM SYSTIMESTAMP)),'minute')) as utc ,
+        SYS_EXTRACT_UTC(SYSTIMESTAMP) from (select cast(sysdate as timestamp) t, SYSTIMESTAMP from dual);
+     
