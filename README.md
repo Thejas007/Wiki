@@ -51,7 +51,8 @@ FUNCTION GetUtcDateTime
   RETURN utc;
   END GetUtcDateTime;
   
-  #Microsoft style guide
+  # Microsoft style guide
+  
   https://docs.microsoft.com/en-us/style-guide/welcome/
   
   https://docs.microsoft.com/en-us/style-guide/a-z-word-list-term-collections/i/invalid-not-valid
