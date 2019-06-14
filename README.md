@@ -57,4 +57,6 @@ FUNCTION GetUtcDateTime
   
   https://docs.microsoft.com/en-us/style-guide/a-z-word-list-term-collections/i/invalid-not-valid
   
-     
+Chrome srcset for image 
+
+     https://simpl.info/srcsetwvalues/
