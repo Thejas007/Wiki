@@ -60,3 +60,38 @@ FUNCTION GetUtcDateTime
 Chrome srcset for image 
 
      https://simpl.info/srcsetwvalues/
+     
+# Certification generation
+
+1. openssl genrsa -out rootca.key 8192
+
+2. openssl req -sha512 -new -x509 -days 3650 -key rootca.key -out rootca.crt
+
+3. touch certindex
+echo 1000 > certserial
+echo 1000 > crlnumber
+
+4. mkdir enduser-certs
+
+5. openssl genrsa -out enduser-certs/enduser-example.com.key 4096
+
+6. openssl req -new -sha512 -key enduser-certs/enduser-example.com.key -out enduser-certs/enduser-example.com.csr
+
+openssl req -new -sha512 -key enduser-certs/dev.key -out enduser-certs/dev.csr
+
+openssl req -new -sha512 -key enduser-certs/dev.key -out enduser-certs/dev.csr
+
+
+7. openssl ca -batch -config ca.conf -notext -in enduser-certs/enduser-example.com.csr -out enduser-certs/enduser-example.com.crt
+
+openssl ca -batch -config C:\Users\tnanjundaiah\Certs\root\ca.config -notext -in enduser-certs/dev.csr -out enduser-certs/dev.crt
+
+on config error
+set OPENSSL_CONF=C:\Users\tnanjundaiah\Certs\root\ca.config
+openssl ca -batch -notext -in enduser-certs/dev.csr -out enduser-certs/dev.crt
+
+After that set
+set OPENSSL_CONF=C:\OpenSSL-Win64\bin\cnf\openssl.cnf
+
+8. cd enduser-certs 
+openssl pkcs12 -export -out dev.pfx -inkey dev.key -in dev.crt
