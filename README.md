@@ -61,7 +61,7 @@ Chrome srcset for image
 
      https://simpl.info/srcsetwvalues/
      
-# Certification generation
+# Certificate generation
 
 1. openssl genrsa -out rootca.key 8192
 
