@@ -93,5 +93,7 @@ openssl ca -batch -notext -in enduser-certs/dev.csr -out enduser-certs/dev.crt
 After that set
 set OPENSSL_CONF=C:\OpenSSL-Win64\bin\cnf\openssl.cnf
 
-8. cd enduser-certs 
+8. Generate pfx file
+cd enduser-certs
+ 
 openssl pkcs12 -export -out dev.pfx -inkey dev.key -in dev.crt
