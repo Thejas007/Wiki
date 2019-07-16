@@ -51,15 +51,7 @@ FUNCTION GetUtcDateTime
   RETURN utc;
   END GetUtcDateTime;
   
-  # Microsoft style guide
-  
-  Link :  https://docs.microsoft.com/en-us/style-guide/welcome/
-  
-  https://docs.microsoft.com/en-us/style-guide/a-z-word-list-term-collections/i/invalid-not-valid
-  
-Chrome srcset for image 
-
-     https://simpl.info/srcsetwvalues/
+ 
      
 # Certificate generation
 
@@ -97,3 +89,14 @@ set OPENSSL_CONF=C:\OpenSSL-Win64\bin\cnf\openssl.cnf
 cd enduser-certs
  
 openssl pkcs12 -export -out dev.pfx -inkey dev.key -in dev.crt
+
+
+# Microsoft style guide
+  
+  Link :  https://docs.microsoft.com/en-us/style-guide/welcome/
+  
+  https://docs.microsoft.com/en-us/style-guide/a-z-word-list-term-collections/i/invalid-not-valid
+  
+Chrome srcset for image 
+
+     https://simpl.info/srcsetwvalues/
