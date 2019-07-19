@@ -97,6 +97,11 @@ openssl pkcs12 -export -out dev.pfx -inkey dev.key -in dev.crt
   
   https://docs.microsoft.com/en-us/style-guide/a-z-word-list-term-collections/i/invalid-not-valid
   
-Chrome srcset for image 
+# Chrome srcset for image 
 
      https://simpl.info/srcsetwvalues/
+     
+# IEnumberable vs IList
+Our contract should have least specific types. Consumer can cast to their usage.
+
+https://stackoverflow.com/questions/3228708/what-should-i-use-an-ienumerable-or-ilist
