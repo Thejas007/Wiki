@@ -105,3 +105,42 @@ openssl pkcs12 -export -out dev.pfx -inkey dev.key -in dev.crt
 Our contract should have least specific types. Consumer can cast to their usage.
 
 https://stackoverflow.com/questions/3228708/what-should-i-use-an-ienumerable-or-ilist
+
+# Build a .net solution using msbuild
+
+    <SolutionToBuild Include="$(BuildProjectFolderPath)/WebSln.sln">
+        <Targets></Targets>
+        <Properties>OutDir=$(OutDir)\Webproj\</Properties>
+    </SolutionToBuild>
+    
+    <SolutionToBuild Include="$(BuildProjectFolderPath)/Tools/CertificateUploader/CertificateUploader.csproj">
+        <Targets></Targets>
+        <Properties>OutDir=$(OutDir)\Tools\CertificateUploader\;Configuration=Release;Platform=AnyCPU</Properties>
+    </SolutionToBuild>
+    
+    
+    
+    * Make sure OutDir is the first argument is the preopties list.
+    
+    # Copying file from out directory
+    <Target Name="AfterCompile">
+		
+		<!--Delete .\artifacts\ directory if exists-->
+		<Exec Command="IF EXIST $(ArtifactsRoot) (RMDIR /S /Q $(ArtifactsRoot))" />
+		
+		<!--Create .\artifacts\ directory-->
+		<Exec Command="IF NOT EXIST $(ArtifactsRoot) (MKDIR $(ArtifactsRoot))" />
+		
+		<!--Copy build output to .\artifacts\ directory-->
+		
+		<!--Copy websites-->
+		
+		<Exec Command="XCOPY &quot;$(Binaries)\Release\Console\_PublishedWebsites\*.*&quot; &quot;$(ArtifactsRoot)\Websites\*.*&quot; /y /e"/>
+			
+		<Exec Command="XCOPY &quot;$(Binaries)\Release\Tools\CertificateUploader\*.*&quot; &quot;$(ArtifactsRoot)\Tools\CertificateUploader\*.*&quot; /y /e"/>
+		
+		
+	</Target>
+     
+     
+    
