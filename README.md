@@ -135,7 +135,7 @@ https://stackoverflow.com/questions/3228708/what-should-i-use-an-ienumerable-or-
 		
 		<!--Copy websites-->
 		
-		<Exec Command="XCOPY &quot;$(Binaries)\Release\Console\_PublishedWebsites\*.*&quot; &quot;$(ArtifactsRoot)\Websites\*.*&quot; /y /e"/>
+		<Exec Command="XCOPY &quot;$(Binaries)\Release\Webproj\_PublishedWebsites\*.*&quot; &quot;$(ArtifactsRoot)\Websites\*.*&quot; /y /e"/>
 			
 		<Exec Command="XCOPY &quot;$(Binaries)\Release\Tools\CertificateUploader\*.*&quot; &quot;$(ArtifactsRoot)\Tools\CertificateUploader\*.*&quot; /y /e"/>
 		
