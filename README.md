@@ -120,7 +120,7 @@ https://stackoverflow.com/questions/3228708/what-should-i-use-an-ienumerable-or-
     
     
     
-    * Make sure OutDir is the first argument is the preopties list.
+    * Make sure OutDir is the first argument in the preopties list.
     
     # Copying file from out directory
     <Target Name="AfterCompile">
