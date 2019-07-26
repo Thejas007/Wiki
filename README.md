@@ -120,9 +120,9 @@ https://stackoverflow.com/questions/3228708/what-should-i-use-an-ienumerable-or-
     
     
     
-    * Make sure OutDir is the first argument in the preopties list.
+    Make sure OutDir is the first argument in the preopties list.
     
-    # Copying file from out directory
+    Copying file from out directory
     <Target Name="AfterCompile">
 		
 		<!--Delete .\artifacts\ directory if exists-->
@@ -143,7 +143,7 @@ https://stackoverflow.com/questions/3228708/what-should-i-use-an-ienumerable-or-
 	</Target>
 	
 	
-     # Embed all dll into single exe
+# Embed all dll into single exe
       Costura is an add-in for Fody
       Embeds dependencies as resources.
      https://github.com/Fody/Costura
