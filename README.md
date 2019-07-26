@@ -141,6 +141,10 @@ https://stackoverflow.com/questions/3228708/what-should-i-use-an-ienumerable-or-
 		
 		
 	</Target>
-     
-     
+	
+	
+     # Embed all dll into single exe
+      Costura is an add-in for Fody
+      Embeds dependencies as resources.
+     https://github.com/Fody/Costura
     
