@@ -161,3 +161,9 @@ https://stackoverflow.com/questions/3228708/what-should-i-use-an-ienumerable-or-
 	   END LOOP;
 	END;
     
+# Execute a store proc
+  variable x refcursor;
+     variable  o_display_msg VARCHAR2;
+    variable o_return_code  NUMBER;
+    exec  PKG_API.GetGemAccount_ByExtAccountCode(    4,    'vlt'      ,	null			,    :x                   ,    :o_display_msg              ,   :o_return_code            );
+print x;
