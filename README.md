@@ -147,4 +147,17 @@ https://stackoverflow.com/questions/3228708/what-should-i-use-an-ienumerable-or-
       Costura is an add-in for Fody
       Embeds dependencies as resources.
      https://github.com/Fody/Costura
+ 
+# Looping a cursor
+	DECLARE
+	   c1   SYS_REFCURSOR;
+	   l    license%rowtype;
+	BEGIN
+	   OPEN c1 FOR SELECT  * FROM  license;
+	   LOOP
+	       FETCH c1 INTO l;
+	       EXIT WHEN c1%notfound;
+	       dbms_output.put_line(l.gemidentifier);
+	   END LOOP;
+	END;
     
