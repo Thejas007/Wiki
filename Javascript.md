@@ -10,12 +10,8 @@
                     type: 'POST',
                     url: '@Url.Action("Action", "Controller")',
                     data: data,
-                    success: function(result, status, xhr, form) {
-                        resolve(result);
-                    },
-                    error: function (result, status, xhr, form) {
-                        resolve(result, status, xhr, form);
-                    }
+                    success: resolve,
+                    error: reject
                 };
 
                 $.ajax(options);
