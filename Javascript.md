@@ -19,8 +19,14 @@
             // Return the Deferred's Promise object
             }
             
-            serviceCall().then(function(result){
+            var successCallBack=function(result){
             if(result){
             // do the operation
             }
-            });
+            };
+            
+            var errorCallBack=function(result, status, xhr, form){
+            //Perform error handling
+            };
+            
+            serviceCall().then(successCallBack, errorCallBack);
