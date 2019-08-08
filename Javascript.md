@@ -32,34 +32,34 @@
             serviceCall().then(successCallBack, errorCallBack);
 
 # Internal working of Promise 
-function Promise(executionFunction) {
-  var state = ‘pending’; 
-  var deferred = null; 
-  var value;
-  var resolveCallBacks=[];
-   var rejectCallBacks=[];
-  function resolve(value){
-  state = ‘resolved’; 
-   this.resolveCallBacks.forEach((nextFunction) => {
-         storedValue = nextFunction(value);
-      });
- 
-  }
-  function reject(error){
-   state = ‘rejected’; 
- this.rejectCallBacks.forEach((nextFunction) => {
-         nextFunction(error);
-      });
- }
-   
-  this.then = function(resolveCallBack,rejectCallBack){
-  if(resolveCallBack){
-  this.resolveCallBacks.push(resolveCallBack)
-  }
-   if(rejectCallBack){
-  this.rejectCallBacks.push(rejectCallBack)
-  }
-  return this;
-  }
-  executionFunction(resolve, reject);
-} 
+             function Promise(executionFunction) {
+               var state = ‘pending’; 
+               var deferred = null; 
+               var value;
+               var resolveCallBacks=[];
+                var rejectCallBacks=[];
+               function resolve(value){
+               state = ‘resolved’; 
+                this.resolveCallBacks.forEach((nextFunction) => {
+                      storedValue = nextFunction(value);
+                   });
+
+               }
+               function reject(error){
+                state = ‘rejected’; 
+              this.rejectCallBacks.forEach((nextFunction) => {
+                      nextFunction(error);
+                   });
+              }
+
+               this.then = function(resolveCallBack,rejectCallBack){
+               if(resolveCallBack){
+               this.resolveCallBacks.push(resolveCallBack)
+               }
+                if(rejectCallBack){
+               this.rejectCallBacks.push(rejectCallBack)
+               }
+               return this;
+               }
+               executionFunction(resolve, reject);
+             } 
