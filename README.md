@@ -165,5 +165,5 @@ https://stackoverflow.com/questions/3228708/what-should-i-use-an-ienumerable-or-
 	  variable x refcursor;
 	     variable  o_display_msg VARCHAR2;
 	    variable o_return_code  NUMBER;
-	    exec  PKG_API.GetAccount_ByExtAccountCode(    4,    'vlt'      ,	null			,    :x                   ,    :o_display_msg              ,   :o_return_code            );
+	    exec  PKG_API.GetAccount_ByExtAccountCode(4,'vlt',null,:x,:o_display_msg,:o_return_code);
 	print x;
