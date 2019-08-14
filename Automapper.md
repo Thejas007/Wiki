@@ -1,6 +1,6 @@
 # Automapper
  1 . MemberList.None in mapping
-   - When you specify MemberList.None in mapping, Make sure to add all explicit mapping to properities. Otherwise when you any propetes get removed in source get siliently igonered durning mapping.
+   - When you specify MemberList.None in mapping, Make sure to add all explicit mapping to properities. Otherwise when you  remove any property in source , it get siliently igonered durning mapping.
    - Add unit for all properties mapping.
    
  2 . Default mapping validation by auompper 
