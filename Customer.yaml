@@ -1,0 +1,98 @@
+swagger: '2.0'
+info:
+  title: customer API
+  description: >-
+    Operations corresponding to customer 
+  version: '1'  
+  license:
+    name: 'Copyright © 2019, Inc. All rights reserved.'
+tags:
+  - name: customer
+produces:
+  - application/json
+schemes:
+  - https
+host: www.api.com
+basePath: /customer
+x-api-namespaces:
+  - Entity.Security
+x-attributes:
+  - IgnoreXmlMediaType
+  - ValidationFilter
+  - InternalApi
+securityDefinitions:
+  BasicAuth:
+    type: basic
+  CmsAuth:
+    type: apiKey
+    in: header
+    name: authorization
+security:
+  - CmsAuth: []
+  - BasicAuth: []
+paths:
+ '/':
+  'post':
+   summary: Customer POST
+   description: Create a new customer
+   tags:
+        - customer
+   operationId: Post
+   consumes: 
+     - application/json
+   produces:
+        - application/json
+   parameters:
+        - in: body
+          name: requestModel
+          required: true
+          description: Customer details
+          schema:
+            $ref: '#/definitions/CustomerV1Model'
+   responses:
+        '204':
+          description: No Content
+        '500':
+          description: Internal server error
+          schema:
+            $ref: '#/definitions/BaseExceptionModel'
+			  
+definitions:
+  CustomerV1Model:
+    type: object
+    description: Request model for customer.
+    allOf:
+      - $ref: '#/definitions/BaseValidatableModel'
+    required: [name,reference_uuid]
+    properties:
+      name:
+        description: Customer name. 
+        type: string        
+        example: "Name 1"      
+      reference_uuid:
+        description: Reference UUID
+        type: string
+        format: uuid
+        example: 7658d47a-3c65-4528-b88a-c67aa25c0099
+  
+  BaseValidatableModel:
+    type: object
+    description: Base model which is exposed by the Web Api framework
+    x-ignore: true
+
+  BaseExceptionModel:
+    type: object
+    description: Represents the exception object thrown from API
+    x-ignore: true    
+    properties:
+      errorCode:
+        description: Application error code specific to operation
+        type: integer
+        format: int32
+      message:
+        description: Friendly error message (any serializable type)
+        type: object
+      activityId:
+        description: TransactionId of the request in Guid format
+        type: string
+        format: uuid	
