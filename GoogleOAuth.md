@@ -65,10 +65,15 @@ Step 2 : Retrieve and use access token to call api's
 
 
 POST /tasks/v1/lists/MTQzNzc2OTUwNDMyNTE3NjgyOTk6MDow/tasks HTTP/1.1
+
 Host: www.googleapis.com
+
 Content-length: 29
+
 Content-type: application/json
+
 Authorization: Bearer ya29.Il-psyTuGKUwMeTMJRRzOjJcs9EMnL8JfqC9cIG1OiScDx8M-CPMwjZWkQ-lzH8dnooX956ndCTQBbU-0x9xBdSTxV870Oz-WqwWwnk2DnNIEQn_5A1nIswZtWbzafg
+
 {
 "title":"From playground"
 }
