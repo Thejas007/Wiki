@@ -1,5 +1,5 @@
 
-Google OAuth authorization_code grant flow demo:
+# Google OAuth authorization_code grant server side flow:
 
 Step 1 : Authorize and show consent 
 Redirect URL will be passed along with client_id registered.
