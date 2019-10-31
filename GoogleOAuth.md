@@ -49,5 +49,30 @@ Authorization: Bearer ya29.Il-pBwwEduTS2-_oMNkZ6B5Tdybg3DxfePMIWPaKXSwL63ZZZ-oVc
 }
 `
 
+# Client flow 
+
+Step 1 : Redirect to authorize page and redirect back to client app with access token 
+
+HTTP/1.1 302 Found
+Location: https://accounts.google.com/o/oauth2/v2/auth?redirect_uri=https%3A%2F%2Fdevelopers.google.com%2Foauthplayground&prompt=consent&response_type=token&client_id=84000154995-gnbo7ij17rvcc4j85132cfdjfrub8p5v.apps.googleusercontent.com&scope=https%3A%2F%2Fwww.googleapis.com%2Fauth%2Ftasks+https%3A%2F%2Fwww.googleapis.com%2Fauth%2Ftasks.readonly&access_type=online
+
+response : will have access token
+
+https://developers.google.com/oauthplayground/#access_token=ya29.Il-psyTuGKUwMeTMJRRzOJcs9EMnL8JfqC9cIG1OiScDx8M-CPMwjZWkQ-lzH8dnooX956ndCTQBbU-0x9xBdSTxV870Oz-WqwWwnk2DnNIEQn_5A1nIswZtWbzafg&token_type=Bearer&expires_in=3600&scope=https://www.googleapis.com/auth/tasks%20https://www.googleapis.com/auth/tasks.readonly 
+
+
+Step 2 : Retrieve and use access token to call api's
+
+
+POST /tasks/v1/lists/MTQzNzc2OTUwNDMyNTE3NjgyOTk6MDow/tasks HTTP/1.1
+Host: www.googleapis.com
+Content-length: 29
+Content-type: application/json
+Authorization: Bearer ya29.Il-psyTuGKUwMeTMJRRzOjJcs9EMnL8JfqC9cIG1OiScDx8M-CPMwjZWkQ-lzH8dnooX956ndCTQBbU-0x9xBdSTxV870Oz-WqwWwnk2DnNIEQn_5A1nIswZtWbzafg
+{
+"title":"From playground"
+}
+
+
 
 
