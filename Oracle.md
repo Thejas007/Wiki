@@ -62,3 +62,12 @@ output despite no record is there in the table. This concept is known as multi-v
 table has 2 set of data i.e, modified data and unmodified data.
 
 In short multi-version allow "read never blocked by write" and "write not blocked by read".
+
+
+DB installation :
+
+https://oracle-base.com/articles/11g/oracle-db-11gr2-installation-on-oracle-linux-7
+
+
+
+
