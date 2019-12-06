@@ -1,12 +1,5 @@
 
-Articles
-Scripts
-Blog
-Certification
-Videos
-Misc
-Printer Friendly
-About
+https://oracle-base.com/articles/11g/oracle-db-11gr2-installation-on-oracle-linux-7
 
  
     
