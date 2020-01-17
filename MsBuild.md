@@ -9,7 +9,7 @@ https://docs.microsoft.com/en-us/visualstudio/msbuild/customize-your-build?view=
 
 
 Sample: 
-`
+```
 <Project>
   <PropertyGroup>
     <!-- Create a property pointing to the root of the repository; ends with backslash. -->
@@ -22,4 +22,4 @@ Sample:
     <AdditionalFiles Include="$(RepositoryRootPath)Shared\StyleCop.json" />
   </ItemGroup>
 </Project>
-`
+```
