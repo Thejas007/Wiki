@@ -8,8 +8,9 @@
             var asmName = typeof(UserController).Assembly.GetName();
             var siteUrls = new Dictionary<string, string>();
 
-            var logOutUrl = this.Url.Link("Default", new { Controller = "Logout", Action = "Index" });
-            var securitySettingsUrl = this.Url.Link("Default", new { Controller = "UserPreferences", Action = "Index" });
+            var logOutUrl = this.Url.Route("Default", new { Controller = "Logout", Action = "Index" }); 
+            //.Link generates absoule url. In some scenario .Link was generating url with http instead of https
+            var securitySettingsUrl = this.Url.Route("Default", new { Controller = "UserPreferences", Action = "Index" });
             
             siteUrls.Add("logOutUrl", logOutUrl);
             siteUrls.Add("securitySettingsUrl", securitySettingsUrl);
