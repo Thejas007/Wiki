@@ -1,0 +1,55 @@
+############################# Filebeat #####################################
+
+filebeat.inputs:
+
+- type: log
+  paths:
+    - C:\inetpub\logs\LogFiles\W3SVC1\*.log
+  fields:
+    logzio_codec: plain
+    token: <--Place token here-->
+    type: iis
+  fields_under_root: true
+  encoding: utf-8
+  ignore_older: 3h
+
+- type: log
+  paths:
+    - C:\LogzIo\*.log
+  fields:
+    logzio_codec: plain
+    token: <--Place token here-->
+    type: custom-log-name
+  fields_under_root: true
+  encoding: utf-8
+  ignore_older: 3h
+  multiline:
+    pattern: '^([0-9]{1,4}/[0-9]{1,2}/[0-9]{1,2} [0-9]{1,2}:[0-9]{1,2}:[0-9]{1,2}\.[0-9]{1,3})'
+    #pattern: '^\d{4}\/\d{2}\/\d{2} \d{2}:\d{2}:\d{2}.\d{3}'
+    negate: true
+    match: after
+#For version 6.x and lower
+#filebeat.registry_file: 'C:\ProgramData\Filebeat\registry'
+
+#For version 7 and higher
+filebeat.registry.path: 'C:\ProgramData\Filebeat'
+
+#The following processors are to ensure compatibility with version 7
+processors:
+- rename:
+    fields:
+     - from: "agent"
+       to: "beat_agent"
+    ignore_missing: true
+- rename:
+    fields:
+     - from: "log.file.path"
+       to: "source"
+    ignore_missing: true
+
+############################# Output ##########################################
+output:
+  logstash:
+    hosts: ["listener.logz.io:5015"]  
+    ssl:
+      certificate_authorities: ['C:\ProgramData\Filebeat\Logzio.crt']
