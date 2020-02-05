@@ -8,7 +8,8 @@
 6. Downaload the file beat config from Logz.io config wizard or use file from https://github.com/Thejas007/Wiki/raw/master/LogzIo/filebeat.yaml 
    Update your token id in yaml
 7. Copy the following certificate (including all lines and dashes). Save the content to C:\ProgramData\Filebeat\Logzio.crt
-       -----BEGIN CERTIFICATE-----
+      
+      -----BEGIN CERTIFICATE-----
       MIIGCDCCA/CgAwIBAgIQKy5u6tl1NmwUim7bo3yMBzANBgkqhkiG9w0BAQwFADCB
       hTELMAkGA1UEBhMCR0IxGzAZBgNVBAgTEkdyZWF0ZXIgTWFuY2hlc3RlcjEQMA4G
       A1UEBxMHU2FsZm9yZDEaMBgGA1UEChMRQ09NT0RPIENBIExpbWl0ZWQxKzApBgNV
@@ -43,6 +44,7 @@
       lBlGGSW4gNfL1IYoakRwJiNiqZ+Gb7+6kHDSVneFeO/qJakXzlByjAA6quPbYzSf
       +AZxAeKCINT+b72x
       -----END CERTIFICATE-----
+      
 8. Run services.msc . Search for filebeat service and start the service.
 
 9. Now any updates in your logs it will start showing in Logz.io dashborad.
