@@ -75,3 +75,20 @@ https://oracle-base.com/articles/11g/oracle-db-11gr2-installation-on-oracle-linu
 
 http://sql.standout-dev.com/2018/09/the-first-and-last-functions-in-oracle-sql/
 
+SELECT 
+  MIN(sal) KEEP (DENSE_RANK FIRST ORDER BY sal) AS min_sal_first_sal,
+ 
+  deptno
+FROM (
+    SELECT 'a' as name, 1 as sal, 1 as deptno FROM DUAL
+UNION ALL SELECT 'b', 1, 1 FROM DUAL
+UNION ALL SELECT 'c', 1, 1 FROM DUAL
+UNION ALL SELECT 'd', 2, 1 FROM DUAL
+UNION ALL SELECT 'e', 3, 1 FROM DUAL
+UNION ALL SELECT 'f', 3, 1 FROM DUAL
+UNION ALL SELECT 'g', 4, 2 FROM DUAL
+UNION ALL SELECT 'h', 4, 2 FROM DUAL
+UNION ALL SELECT 'i', 5, 2 FROM DUAL
+UNION ALL SELECT 'j', 5, 2 FROM DUAL)
+group by deptno;
+
