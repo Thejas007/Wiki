@@ -71,3 +71,7 @@ https://oracle-base.com/articles/11g/oracle-db-11gr2-installation-on-oracle-linu
 
 
 
+# keep dense_rank
+
+http://sql.standout-dev.com/2018/09/the-first-and-last-functions-in-oracle-sql/
+
