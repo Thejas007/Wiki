@@ -74,7 +74,7 @@ https://oracle-base.com/articles/11g/oracle-db-11gr2-installation-on-oracle-linu
 # keep dense_rank
 
 http://sql.standout-dev.com/2018/09/the-first-and-last-functions-in-oracle-sql/
-
+```
 SELECT 
   MIN(sal) KEEP (DENSE_RANK FIRST ORDER BY sal) AS min_sal_first_sal,
  
@@ -91,4 +91,24 @@ UNION ALL SELECT 'h', 4, 2 FROM DUAL
 UNION ALL SELECT 'i', 5, 2 FROM DUAL
 UNION ALL SELECT 'j', 5, 2 FROM DUAL)
 group by deptno;
+```
 
+# Trasction scope
+Commiting and rollbacking the transcation from c# .NET
+
+https://docs.microsoft.com/en-us/dotnet/api/system.transactions.transactionscope.complete?view=netframework-4.8
+
+```
+using (var transactionScope = new TransactionScope())
+                {
+                    using (var cmd = database.GetStoredProcCommand(_storedProcedureName))
+                    {
+                    database.AddInParameter(cmd, "PARAM1", DbType.Int32, 123);
+                    database.AddOutParameter(cmd, OUT_RETURN_CODE_PARAM, DbType.Int32, 1);
+                      database.ExecuteNonQuery(cmd);
+                    }
+                    
+                     transactionScope.Complete();
+                    
+                 }
+```
