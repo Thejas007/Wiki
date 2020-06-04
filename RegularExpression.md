@@ -48,6 +48,7 @@ i (insensitive) makes the whole expression case-insensitive (for instance /aBc/i
 
 
 # Regular expression to filter csproj files 
-/(\w|\.)*(.csproj)/g
-
+``` 
+ /(\w|\.)*(.csproj)/g
+````
 https://regexr.com/
