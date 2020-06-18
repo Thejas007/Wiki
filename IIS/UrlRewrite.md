@@ -12,6 +12,8 @@
                 
 ```
 
+![Conditions](Conditions.PNG)
+![Actions](Actions.PNG)
 
  - https://blog.elmah.io/web-config-redirects-with-rewrite-rules-https-www-and-more/
 
