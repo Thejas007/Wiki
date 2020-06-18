@@ -15,6 +15,16 @@
 ![Conditions](Conditions.PNG)
 ![Actions](Actions.PNG)
 
+
+- {HTTP_URL}      = /path/to/file.ext?key=value
+- {PATH_INFO}     = /path/to/file.ext
+- {R:1}           = /path/to/file.ext
+- {REQUEST_URI}   = /path/to/file.ext?key=value
+- {UNENCODED_URL} = /path/to/file.ext?key=value
+- {URL}           = /path/to/file.ext
+- {URL_PATH_INFO} = /path/to/file.ext
+
+
  - https://blog.elmah.io/web-config-redirects-with-rewrite-rules-https-www-and-more/
 
  - http://docs.imis.com/20.1.19/index.htm#!redirectingtotheurlofthevirtualdirectory1.htm
