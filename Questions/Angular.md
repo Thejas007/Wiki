@@ -218,3 +218,87 @@
 	providers on Components and Directives.
 
 	viewProviders on Components.
+1. ### Http client 
+	- Call service and get promise 
+	
+	```javascript
+	search(term:string) {
+	  let promise = new Promise((resolve, reject) => {
+	    let apiURL = `${this.apiRoot}?term=${term}&media=music&limit=20`;
+	    this.http.get(apiURL)
+	      .toPromise()
+	      .then(
+		res => { // Success
+		this.results = res.json().results;
+		resolve();
+		},
+		msg => { // Error
+		reject(msg);
+		}
+	      );
+	  });
+	  return promise;
+	}
+	}
+	```
+	
+	- Call service with Observable
+	```javascript
+		create(member: Member): Observable<any> {
+	    return this.http
+	      .post(this.RESOURCE_BASE_URL, member)
+	      .map(response => {
+		if (response.status === 200) this.toastsSerivce.success(this.translateService.instant('lbl_users_member_created'));
+		return response;
+	      })
+	      .catch((error:any) => Observable.throw(this.toastsSerivce.error(this.translateService.instant('lbl_users_member_create_failed'))));
+	  }
+	```
+	
+1. ### Routes
+
+	- Route parameters
+	```javascript
+		{path: 'search/:term', component: SearchComponent}
+		
+		constructor(private itunes:SearchService,
+            private route: ActivatedRoute) {
+		  this.route.params.subscribe( params => this.doSearch(params['term'])); (1)
+		}
+	```
+	
+	- Child routes
+	```javascript
+			const routes: Routes = [
+		  {path: '', redirectTo: 'home', pathMatch: 'full'},
+		  {path: 'find', redirectTo: 'search'},
+		  {path: 'home', component: HomeComponent},
+		  {path: 'search', component: SearchComponent},
+		  {
+		    path: 'artist/:artistId',
+		    component: ArtistComponent,
+		    children: [
+		      {path: '', redirectTo: 'tracks'}, (1)
+		      {path: 'tracks', component: ArtistTrackListComponent}, (2)
+		      {path: 'albums', component: ArtistAlbumListComponent}, (3)
+		    ]
+	```
+	
+	- Route guard
+	```javascript
+		{
+	    path: "artist/:artistId",
+	    component: ArtistComponent,
+	    canActivate: [OnlyLoggedInUsersGuard, AlwaysAuthGuard],
+	    canActivateChild: [AlwaysAuthChildrenGuard],
+	    children: [
+	      { path: "", redirectTo: "tracks", pathMatch: "full" },
+	      { path: "tracks", component: ArtistTrackListComponent },
+	      { path: "albums", component: ArtistAlbumListComponent }
+	    ]
+	  },
+	```
+	
+	- Route strategy
+	  PathLocationStrategy
+	  HashLocationStrategy
