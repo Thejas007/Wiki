@@ -85,7 +85,7 @@
       
       <joke *ngFor="let j of jokes" [joke]="j"></joke>
       ```
-      ```
+      ```javascript
             class JokeFormComponent {
         @Output() jokeCreated = new EventEmitter<Joke>();
 
@@ -97,5 +97,33 @@
       <joke-form (jokeCreated)="addJoke($event)"></joke-form>
       
       ```
-      
+1. ### Model driven forms with validation
+
+      ```javascript
+      import { FormGroup, FormControl, Validators } from '@angular/forms';
+      .
+      .
+      .
+      class ModelFormComponent implements OnInit {
+        myform: FormGroup;
+
+        ngOnInit() {
+          myform = new FormGroup({
+              name: new FormGroup({
+                  firstName: new FormControl('', Validators.required), (1)
+                  lastName: new FormControl('', Validators.required),
+              }),
+              email: new FormControl('', [ (2)
+                  Validators.required,
+                  Validators.pattern("[^ @]*@[^ @]*") (3)
+              ]),
+              password: new FormControl('', [
+                  Validators.minLength(8), (4)
+                  Validators.required
+              ]),
+              language: new FormControl() (5)
+          });
+        }
+      }
+      ```
      
