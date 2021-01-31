@@ -181,3 +181,32 @@
    </div>
 
       ```
+1. ### Inject and Injectable
+
+	We use the @Inject parameter decorator to instruct Angular we want to resolve a token and inject a dependency into a constructor.
+
+	We use the @Injectable class decorators to automatically resolve and inject all the parameters of class constructor.
+	
+	```javascript
+	import { Inject } from '@angular/core';
+	.
+	.
+	.
+	class SimpleService {
+	  otherService: OtherService;
+
+	  constructor(@Inject(OtherService) otherService: OtherService) {
+	      this.otherService = otherService;
+	  };
+	}
+	@Injectable()
+	class SimpleService {
+	  otherService: OtherService;
+
+	  constructor(otherService: OtherService) {
+	      this.otherService = otherService;
+	  };
+	}
+	```
+	
+	
