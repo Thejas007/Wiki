@@ -127,3 +127,40 @@
       }
       ```
      
+1. Template driven form 
+   Template-driven form still uses the same classes as the model-driven form but in the template drive approach the models are created by directives in the template instead of explicitly created on the component.
+   
+      ```javascript
+       <div class="container">
+      <form novalidate
+            (ngSubmit)="onSubmit()"
+            #f="ngForm">
+
+         <fieldset ngModelGroup="name">
+            <div class="form-group"
+                 [ngClass]="{
+              'has-danger': firstName.invalid && (firstName.dirty || firstName.touched),
+              'has-success': firstName.valid && (firstName.dirty || firstName.touched)
+         }">
+               <label>First Name</label>
+               <input type="text"
+                      class="form-control"
+                      name="firstName"
+                      [(ngModel)]="model.firstName"
+                      required
+                      #firstName="ngModel">
+               <div class="form-control-feedback"
+                    *ngIf="firstName.errors && (firstName.dirty || firstName.touched)">
+                  <p *ngIf="firstName.errors.required">First name is required</p>
+               </div>
+            </div>
+            <button type="submit"
+	        class="btn btn-primary"
+	        [disabled]="f.invalid">Submit
+	</button>
+
+	<pre>{{f.value | json}}</pre>
+   </form>
+   </div>
+
+      ```
