@@ -210,3 +210,11 @@
 	```
 	
 	
+1. ### Providers
+	We can configure injectors in Angular by:
+
+	providers on NgModule.
+
+	providers on Components and Directives.
+
+	viewProviders on Components.
