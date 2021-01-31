@@ -125,6 +125,23 @@
           });
         }
       }
+      
+      <div class="form-group"
+       [ngClass]="{
+        'has-danger': password.invalid && (password.dirty || password.touched),
+        'has-success': password.valid && (password.dirty || password.touched)
+   }">
+    <label>Password</label>
+    <input type="password"
+           class="form-control"
+           formControlName="password"
+           required>
+    <div class="form-control-feedback"
+         *ngIf="password.errors && (password.dirty || password.touched)">
+      <p *ngIf="password.errors.required">Password is required</p>
+      <p *ngIf="password.errors.minlength">Password must be 8 characters long, we need another {{password.errors.minlength.requiredLength - password.errors.minlength.actualLength}} characters </p>
+    </div>
+  	</div>
       ```
      
 1. Template driven form 
