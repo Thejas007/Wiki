@@ -1,0 +1,39 @@
+1. C# and .net
+What is the .net and c# Language version used - C# 6 or 7?
+What is null coalescing operator when to use it?
+What is compiler used in building c# application?
+Explain 3 good language features of c# ?
+Write a method name AddNumbers and make it async
+and call the same method from main method.
+What is Yield keyword?
+2. Software engineering oops
+SOLID principals ?
+What is Dependency injection?
+Any Design patters?
+3. Algorithm
+Write a algorithm to insert a new node to a binary search tree.
+4. WebApi
+What is Rest?
+How it different from SOAP?
+Advantages and Disadvantage of REST?
+What is stateful and stateless?
+Write an action method to accept url /customer/orders/1234 and order id should be integer
+What is swagger(open api specification)?
+What is the different between http status code 200, 400 and 500?
+What Authentication used in your project?
+What is OAuth?
+5. Nunit- Unit testing
+Write a unit test for add 2 numbers
+What is mocking?
+What tool used for mocking?
+6. HTML5 and css
+What is html5?
+What is media query?
+What type of storage is available in browser? Local db ,session , indexdb , websql
+7. Angular
+What is angular ?
+Briefly explain angular architecture?
+Difference between constructor and ngOnInit methods in a component?
+What are services? What is the lifetime of a service?
+What are @Input and @Output annotation?
+Lazy load module?
