@@ -64,3 +64,22 @@
     0 0 1 * *
     On January 1st at Midnight
     0 0 1 1 *
+
+## CRON_TZ
+  >The CRON_TZ specifies the time zone specific for the cron table. User type into the chosen table times in the time of the specified time zone. The time into log is taken from    local time zone, where is the daemon running.
+  >CRON_TZ=EST so that job will run on EST time
+  
+       # use /bin/sh to run commands, no matter what /etc/passwd says
+       SHELL=/bin/sh
+       # mail any output to `paul', no matter whose crontab this is
+       MAILTO=paul
+       #
+       CRON_TZ=Japan
+       # run five minutes after midnight, every day
+       5 0 * * *       $HOME/bin/daily.job >> $HOME/tmp/out 2>&1
+       # run at 2:15pm on the first of every month -- output mailed to paul
+       15 14 1 * *     $HOME/bin/monthly
+       # run at 10 pm on weekdays, annoy Joe
+       0 22 * * 1-5    mail -s "It's 10pm" joe%Joe,%%Where are your kids?%
+       23 0-23/2 * * * echo "run 23 minutes after midn, 2am, 4am ..., everyday"
+       5 4 * * sun     echo "run at 5 after 4 every sunday"
