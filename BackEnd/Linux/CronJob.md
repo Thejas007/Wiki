@@ -16,7 +16,7 @@
   In short what I am wondering is when gaining an hour does the 3 am hour happen once or twice and and losing an hour does the 2 am hour happen at all. I have not been able to find anything about this when looking on Google.
   
   Answer
-  The answer would be dependent on the variant/extension of cron you are using. Some variants do not handle the Daylight Saving Time, leading to missing jobs and twice run of the job.
+  - The answer would be dependent on the variant/extension of cron you are using. Some variants do not handle the Daylight Saving Time, leading to missing jobs and twice run of the job.
   
   >cron checks each minute to see if its spool directory's modtime (or the modtime on /etc/crontab) has changed
   
@@ -36,6 +36,7 @@
    So, whenever the time shifts may be 2:59:59 or at 3:00:00, cron's taking care of the job runs by handling the situation and running only the missed ones and avoids running the  already ran jobs.
    
    ### Examples
+```
     Every Minute
     * * * * *
     Every Five Minutes
@@ -64,11 +65,11 @@
     0 0 1 * *
     On January 1st at Midnight
     0 0 1 1 *
-
+```
 ## CRON_TZ
-  >The CRON_TZ specifies the time zone specific for the cron table. User type into the chosen table times in the time of the specified time zone. The time into log is taken from    local time zone, where is the daemon running.
-  >CRON_TZ=EST so that job will run on EST time
-  
+  - The CRON_TZ specifies the time zone specific for the cron table. User type into the chosen table times in the time of the specified time zone. The time into log is taken from    local time zone, where is the daemon running.
+  - CRON_TZ=EST so that job will run on EST time
+  ```
        # use /bin/sh to run commands, no matter what /etc/passwd says
        SHELL=/bin/sh
        # mail any output to `paul', no matter whose crontab this is
@@ -83,3 +84,4 @@
        0 22 * * 1-5    mail -s "It's 10pm" joe%Joe,%%Where are your kids?%
        23 0-23/2 * * * echo "run 23 minutes after midn, 2am, 4am ..., everyday"
        5 4 * * sun     echo "run at 5 after 4 every sunday"
+```
