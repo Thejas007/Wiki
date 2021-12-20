@@ -1,0 +1,31 @@
+version: '3.4'
+
+services:
+  vmware.gem.connector.sscpconsumerservice:
+    image: service:dev
+    build:
+      context: .
+      dockerfile: src\Service\Dockerfile
+    container_name: "service"
+    network_mode: bridge
+    stop_grace_period: 30s
+    environment:
+      - ConnectionStrings:DefaultConnection=server=${MYSQL_SERVER}; database=${MYSQL_DB}; uid=${MYSQL_USER}; pwd=${MYSQL_PASSWORD};
+      - Aws:UseLocalStack=true
+      - Aws:LocalStackServiceUrl=${LOCAL_STACK_HOST}
+
+  vmware.gem.connector.sscpconsumerserviceapi:
+    image: api:dev
+    build:
+      context: .\ApiBaseFolder
+      dockerfile: ApiFolder\Dockerfile
+    ports:
+      - 8001:8001      
+    container_name: "sscpconsumerserviceapi"
+    network_mode: bridge
+    stop_grace_period: 30s
+    environment:            
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ConnectionStrings:DefaultConnection=server=${MYSQL_SERVER}; database=${MYSQL_DB}; uid=${MYSQL_USER}; pwd=${MYSQL_PASSWORD};
+      - Aws:UseLocalStack=true
+      - Aws:LocalStackServiceUrl=${LOCAL_STACK_HOST}      
