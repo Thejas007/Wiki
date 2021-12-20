@@ -1,0 +1,24 @@
+#See https://aka.ms/containerfastmode to understand how Visual Studio uses this Dockerfile to build your images for faster debugging.
+
+FROM mcr.microsoft.com/dotnet/aspnet:5.0 AS base
+WORKDIR /app
+
+FROM mcr.microsoft.com/dotnet/sdk:5.0 AS publish
+WORKDIR /src
+COPY . .
+WORKDIR "/src/folderOfApiProject"
+RUN dotnet publish "Api.csproj" -c Release -o /app/publish
+
+FROM base AS final
+# Configure web servers to bind to port 8001 when present
+ENV ASPNETCORE_URLS=http://+:8001 \
+    # Enable detection of running in a container
+    DOTNET_RUNNING_IN_CONTAINER=true \
+    # Enabling the invariant mode
+    DOTNET_SYSTEM_GLOBALIZATION_INVARIANT=true
+
+# Exposing higher port number as per https://stackoverflow.com/a/53544813
+EXPOSE 8001
+WORKDIR /app
+COPY --from=publish /app/publish .
+ENTRYPOINT ["dotnet", "Api.dll"]
