@@ -1,0 +1,240 @@
+AWSTemplateFormatVersion: 2010-09-09
+
+Description: >
+  CloudFormation template for creating SNS and SQS setup.
+Parameters:
+  EnvironmentType: 
+      Description: The environment type
+      Type: String
+      Default: UAT
+      AllowedValues: 
+        - PROD
+        - UAT 
+Resources:
+  OrderRequestsTopic:
+    Type: AWS::SNS::Topic
+    Properties:
+      TopicName: !Sub 'order-requests-topic-${EnvironmentType}.fifo'
+      DisplayName: Order requests
+      FifoTopic: true
+      ContentBasedDeduplication: true
+      KmsMasterKeyId: !Ref MessageEncryptionKey
+      Tags: 
+        - Key: Name
+          Value: !Sub 'order-requests-topic-${EnvironmentType}.fifo'
+  
+  OrderRequestsQueue:
+    Type: AWS::SQS::Queue
+    Properties: 
+      ContentBasedDeduplication: true
+      FifoQueue: true
+      FifoThroughputLimit: perQueue
+      KmsMasterKeyId: !Ref MessageEncryptionKey
+      QueueName: !Sub 'order-request-queue-${EnvironmentType}.fifo'      
+      RedrivePolicy:
+        deadLetterTargetArn: !GetAtt OrderRequestsDLQ.Arn
+        maxReceiveCount: 10
+      Tags: 
+        - Key: Name
+          Value: !Sub order-request-queue-${EnvironmentType}.fifo
+          
+  OrderRequestsTopicSubscription:        
+    Type: AWS::SNS::Subscription
+    Properties:       
+      Endpoint: !GetAtt OrderRequestsQueue.Arn      
+      Protocol: 'sqs'
+      RawMessageDelivery: false
+      TopicArn: !Ref OrderRequestsTopic 
+  
+  OrderAckTopicSubscription:        
+    Type: AWS::SNS::Subscription
+    Properties:       
+      Endpoint: !GetAtt OrderAckQueue.Arn      
+      Protocol: 'sqs'
+      RawMessageDelivery: false
+      TopicArn: !Ref OrderAckTopic
+
+  OrderAckQueue:
+    Type: AWS::SQS::Queue
+    Properties: 
+      ContentBasedDeduplication: true
+      FifoQueue: true
+      FifoThroughputLimit: perQueue
+      KmsMasterKeyId: !Ref MessageEncryptionKey
+      QueueName: !Sub 'order-ack-queue-${EnvironmentType}.fifo'      
+      RedrivePolicy:
+        deadLetterTargetArn: !GetAtt OrderAckDLQ.Arn
+        maxReceiveCount: 10
+      Tags: 
+        - Key: Name
+          Value: !Sub order-ack-queue-${EnvironmentType}.fifo
+  
+  OrderAckDLQ:
+    Type: AWS::SQS::Queue
+    Properties: 
+      ContentBasedDeduplication: true
+      FifoQueue: true
+      KmsMasterKeyId: !Ref MessageEncryptionKey
+      QueueName: !Sub 'order-ack-dlq-${EnvironmentType}.fifo'
+      Tags: 
+        - Key: Name
+          Value: !Sub 'order-ack-dlq-${EnvironmentType}.fifo'
+         
+  OrderRequestsDLQ:
+    Type: AWS::SQS::Queue
+    Properties: 
+      ContentBasedDeduplication: true
+      FifoQueue: true
+      KmsMasterKeyId: !Ref MessageEncryptionKey
+      QueueName: !Sub 'order-request-dlq-${EnvironmentType}.fifo'
+      Tags: 
+        - Key: Name
+          Value: !Sub 'order-request-dlq-${EnvironmentType}.fifo'
+
+  OrderAckTopic:
+    Type: AWS::SNS::Topic
+    Properties:
+      TopicName: !Sub order-ack-topic-${EnvironmentType}.fifo    
+      DisplayName: Order ack
+      FifoTopic: true
+      ContentBasedDeduplication: true
+      KmsMasterKeyId: !Ref MessageEncryptionKey
+      Tags: 
+        - Key: Name
+          Value: !Sub order-ack-topic-${EnvironmentType}.fifo 
+ 
+  OrderRequestsSnsSendMessageQueuePolicy: 
+    Type: AWS::SQS::QueuePolicy
+    Properties:
+      PolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service: sns.amazonaws.com
+            Action: sqs:SendMessage
+            Resource: 
+              - !GetAtt OrderRequestsQueue.Arn
+            Condition:
+              ArnEquals:
+                aws:SourceArn: !Ref OrderRequestsTopic
+      Queues:
+        - !Ref OrderRequestsQueue   
+
+# Create Customer Managed KMS Key
+  MessageEncryptionKey:
+    Type: AWS::KMS::Key
+    Properties: 
+      Description: key-sns-sqs
+      KeyPolicy:
+        Version: 2012-10-17
+        Id: key-sns-sqs
+        Statement:
+          - Sid: Allow direct access to key metadata to the account
+            Effect: Allow
+            Principal:
+              AWS: !Join
+                - ''
+                - - 'arn:aws:iam::'
+                  - !Ref 'AWS::AccountId'
+                  - ':root'
+            Action: 
+              - 'kms:Describe*'
+              - 'kms:Get*'
+              - 'kms:List*'
+              - 'kms:RevokeGrant'
+            Resource: '*'
+          - Sid: Allow access for Key Administrators
+            Effect: Allow
+            Principal:
+              AWS: 
+                - !Sub 'arn:aws:iam::${AWS::AccountId}:role/Admin'
+                - !Sub 'arn:aws:iam::${AWS::AccountId}:role/PowerUser'
+            Action: 
+              - 'kms:Create*'
+              - "kms:Describe*"
+              - "kms:Enable*"
+              - "kms:List*"
+              - "kms:Put*"
+              - "kms:Update*"
+              - "kms:Revoke*"
+              - "kms:Disable*"
+              - "kms:Get*"
+              - "kms:Delete*"
+              - "kms:TagResource"
+              - "kms:UntagResource"
+              - "kms:ScheduleKeyDeletion"
+              - "kms:CancelKeyDeletion"
+              - "kms:ReplicateKey"
+              - "kms:UpdatePrimaryRegion"
+            Resource: '*'
+
+          - Sid: Allow access through Simple Queue Service (SQS) for all principals in the account that are authorized to use SQS
+            Effect: Allow
+            Principal:
+              AWS: '*'
+            Action: 
+              - "kms:Encrypt"
+              - "kms:Decrypt"
+              - "kms:ReEncrypt*"
+              - "kms:GenerateDataKey*"
+              - "kms:CreateGrant"
+              - "kms:DescribeKey"
+            Resource: '*'
+            Condition:
+              StringEquals:
+                'kms:ViaService': !Sub 'sqs.${AWS::Region}.amazonaws.com'
+                'kms:CallerAccount': !Sub '${AWS::AccountId}'
+          - Sid: Allow access through Simple Notifivation Service (SNS) for all principals in the account that are authorized to use SNS
+            Effect: Allow
+            Principal:
+              AWS: '*'
+            Action: 
+              - "kms:Encrypt"
+              - "kms:Decrypt"
+              - "kms:ReEncrypt*"
+              - "kms:GenerateDataKey*"
+              - "kms:CreateGrant"
+              - "kms:DescribeKey"
+            Resource: '*'
+            Condition:
+              StringEquals:
+                'kms:ViaService': !Sub 'sns.${AWS::Region}.amazonaws.com'
+                'kms:CallerAccount': !Sub '${AWS::AccountId}'
+          - Sid: Allow access to Simple Notifivation Service (SNS) 
+            Effect: Allow
+            Principal:
+              Service: 'sns.amazonaws.com'
+            Action: 
+              - "kms:Encrypt"
+              - "kms:Decrypt"
+              - "kms:GenerateDataKey*"
+              - "kms:DescribeKey"
+            Resource: '*' 
+          - Sid: Allow access to SQS
+            Effect: Allow
+            Principal:
+              Service: 'sqs.amazonaws.com'
+            Action: 
+              - "kms:Encrypt"
+              - "kms:Decrypt"
+              - "kms:GenerateDataKey*"
+              - "kms:DescribeKey"
+            Resource: '*'                                            
+
+Outputs:
+  OrderRequestsTopicArn:
+    Description: A reference to the OrderRequestsTopic
+    Value: !Ref OrderRequestsTopic
+  
+  OrderAckTopicArn:
+    Description: A reference to the OrderAckTopic
+    Value: !Ref OrderAckTopic        
+
+  OrderRequestsQueueArn:
+    Description: A reference to the OrderRequestsQueue
+    Value: !GetAtt  OrderRequestsQueue.Arn
+  
+  OrderRequestsQueueUrl:
+    Description: A reference to the OrderRequestsQueue
+    Value: !Ref  OrderRequestsQueue             
